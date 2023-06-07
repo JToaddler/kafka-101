@@ -1,0 +1,6 @@
+
+Below 2 commands are not required to be executed everytime
+sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
+sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+
+make sure to set the advertised.listeners & listeners to use the correct IP instead of localhost
