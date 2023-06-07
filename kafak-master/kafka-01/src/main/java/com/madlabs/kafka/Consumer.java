@@ -23,7 +23,7 @@ public class Consumer {
 		String topic = "demo_java";
 
 		Properties props = new Properties();
-		props.setProperty("bootstrap.servers", "localhost:9092");
+		props.setProperty("bootstrap.servers", "172.23.227.21:9092");
 		props.setProperty("key.deserializer", StringDeserializer.class.getName());
 		props.setProperty("value.deserializer", StringDeserializer.class.getName());
 		props.setProperty("group.id", groupId);
