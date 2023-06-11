@@ -1,7 +1,7 @@
-package com.madlabs.kafka;
+package com.madlabs.kafka.test;
 
 import java.util.Properties;
-import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -11,11 +11,13 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ProducerDemo {
+public class Producer {
+	private static final Logger log = LoggerFactory.getLogger(Producer.class);
 
-	private static final Logger log = LoggerFactory.getLogger(ProducerDemo.class);
+	private static final String topic = "standalone-test";
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
+
 		log.info("Test log");
 
 		Properties props = new Properties();
@@ -28,28 +30,10 @@ public class ProducerDemo {
 
 		KafkaProducer<String, String> producer = new KafkaProducer<>(props);
 
-		for (int i = 0; i < 10; i++) {
-			send(producer, i);
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		producer.flush();
-		producer.close();
+		for (int i = 10; i < 20; i++) {
 
-	}
-
-	public static void send(KafkaProducer<String, String> producer, int id) {
-
-		String topic = "demo_java";
-
-		for (int i = 0; i < 10; i++) {
-
-			String key = "id_" + id;
-			String value = "Sample Message - " + id + "-" + i;
+			String key = "id_" + i;
+			String value = "Sample Message - " + i;
 
 			ProducerRecord<String, String> pRecord = new ProducerRecord<>(topic, key, value);
 			producer.send(pRecord, new Callback() {
@@ -64,7 +48,7 @@ public class ProducerDemo {
 				}
 			});
 		}
-
+		TimeUnit.SECONDS.sleep(3);
 	}
 
 }
